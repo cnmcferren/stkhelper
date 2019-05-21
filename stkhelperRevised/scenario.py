@@ -18,6 +18,14 @@ class Scenario:
             self.__scenario.SetTimePeriod('Today',str(timePeriod))
         except COMError:
             raise ValueError, "Time period not properly formatted"
-        
+
+    def SetTimePeriod(self, elapsedTime):
+
+        self.__scenario.SetTimePeriod('Today',str(elapsedTime))
+
+    def Close(self):
+
+        self.__guardian.root.CloseScenario()
+
     def GetGuardian(self):
         return self.__guardian
