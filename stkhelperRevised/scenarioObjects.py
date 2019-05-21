@@ -89,6 +89,15 @@ class Camera:
 
             return 0
 
+    def ComputeDSInfo(self, areaTarget, passArray):
+
+        startTime = passArray[0]
+        endTime = passArray[1]
+
+        keplerians = self.ComputeKeplerians(startTime)
+
+        return [areaTarget.ID, areaTarget.center, keplerians, (startTime, endTime)]
+
     def GetGuardian(self):
         return self.__guardian
 
