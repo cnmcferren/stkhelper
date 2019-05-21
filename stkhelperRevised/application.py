@@ -8,3 +8,7 @@ class Application:
         self.__uiApplication.UserControl = True
         
         self.root = self.__uiApplication.Personality2
+
+    def Close(self):
+
+        self.__uiApplication.Quit()
