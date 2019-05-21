@@ -1,0 +1,11 @@
+Metadata-Version: 2.1
+Name: stkhelperRevised
+Version: 0.0.1
+Summary: Uses the STK software to create simulations for satellite testing
+Home-page: https://github.com/cnmcferren/stkhelperRevised
+Author: W. Conor McFerren
+Author-email: cnmcferren@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Description-Content-Type: text/markdown

@@ -9,9 +9,9 @@ class Scenario:
         
         
         self.__guardian = application
-        self.name = name
+        self.name = name.replace(' ','_')
         
-        application.root.NewScenario(' ','_')
+        application.root.NewScenario(self.name)
         self.__scenario = application.root.CurrentScenario
         self.__scenario = self.__scenario.QueryInterface(STKObjects.IAgScenario)
         try:

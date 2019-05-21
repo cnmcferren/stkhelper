@@ -57,7 +57,7 @@ class TLE_Manager:
         """
         
         sscNumber = str(sscNumber)
-        application.GetRoot().ExecuteCommand("CreateTLEFile * AGIServer " +
+        application.root.ExecuteCommand("CreateTLEFile * AGIServer " +
                 os.getcwd() + "\\" + sscNumber + ".tle" + 
                 " SSCNumber " + sscNumber)
    

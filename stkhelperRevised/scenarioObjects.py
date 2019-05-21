@@ -120,7 +120,7 @@ class Satellite:
             
         try:
             root.ExecuteCommand('SetState */Satellite/' + self.name + ' TLE "' +
-                                     tle[0] + '" "' + tle[1] +
+                                     self.tle[0] + '" "' + self.tle[1] +
                                      '" TimePeriod "' +
                                      self.__guardian.StartTime + '" "' +
                                      self.__guardian.StopTime + '"')
@@ -142,7 +142,7 @@ class Satellite:
         inc = result.DataSets.GetDataSetByName('Inclination').GetValues()
         raan = result.DataSets.GetDataSetByName('RAAN').GetValues()
         aop = result.DataSets.GetDataSetByName('Arg of Perigee').GetValues()
-        trueAnomoly = result.DataSets.GetDataSetByName('True Anomaly').GetValues()
+        trueAnomaly = result.DataSets.GetDataSetByName('True Anomaly').GetValues()
 
         arr = [time,sma,ecc,inc,raan,aop,trueAnomaly]
         
