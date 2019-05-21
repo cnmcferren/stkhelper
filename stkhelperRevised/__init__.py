@@ -1,3 +1,4 @@
-from stkhelper.application import Application
-from stkhelper.processing import Processing
-from tle_manager import TLE_Manager
+from stkhelperRevised.application import Application
+from stkhelperRevised.scenario import Scenario
+from stkhelperRevised.scenarioObjects import AreaTarget, Satellite, Camera
+from stkhelperRevised.toolbox import Toolbox, TLE_Manager
