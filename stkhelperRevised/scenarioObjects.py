@@ -120,7 +120,7 @@ class Satellite:
             
         try:
             root.ExecuteCommand('SetState */Satellite/' + self.name + ' TLE "' +
-                                     tle[0] + '" "' + tle[1] +
+                                     self.tle[0] + '" "' + self.tle[1] +
                                      '" TimePeriod "' +
                                      self.__guardian.StartTime + '" "' +
                                      self.__guardian.StopTime + '"')
