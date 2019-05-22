@@ -87,7 +87,7 @@ class Toolbox:
         midLat = (float(startLat) + float(endLat))/2.0
         midLon = (float(startLon) + float(endLon))/2.0
         
-        return [name, (midLat,midLon)]
+        return (midLat,midLon)
     
     @staticmethod
     def GetTimeDelta(timeArray):

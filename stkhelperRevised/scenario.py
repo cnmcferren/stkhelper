@@ -22,6 +22,9 @@ class Scenario:
     def SetTimePeriod(self, elapsedTime):
 
         self.__scenario.SetTimePeriod('Today',str(elapsedTime))
+        
+    def GetReference(self):
+        return self.__scenario
 
     def Close(self):
 

@@ -13,7 +13,7 @@ class AreaTarget:
     def __init__(self, scenario, parsedLine):
         self.__guardian = scenario
         
-        root = self.__guardian.root
+        root = self.__guardian.GetGuardian().root
         
         root.BeginUpdate()
         
@@ -89,15 +89,6 @@ class Camera:
 
             return 0
 
-    def ComputeDSInfo(self, areaTarget, passArray):
-
-        startTime = passArray[0]
-        endTime = passArray[1]
-
-        keplerians = self.ComputeKeplerians(startTime)
-
-        return [areaTarget.ID, areaTarget.center, keplerians, (startTime, endTime)]
-
     def GetGuardian(self):
         return self.__guardian
 
@@ -109,7 +100,7 @@ class Satellite:
 
         root = self.__guardian.GetGuardian().root
 
-        TLE_Manager.GenerateTLE(self.__guardian, str(sscNumber))
+        TLE_Manager.GenerateTLE(self.__guardian.GetGuardian().root, str(sscNumber))
         self.tle = TLE_Manager.ParseTLE(str(sscNumber) + ".tle")
         
         try:
@@ -122,8 +113,8 @@ class Satellite:
             root.ExecuteCommand('SetState */Satellite/' + self.name + ' TLE "' +
                                      self.tle[0] + '" "' + self.tle[1] +
                                      '" TimePeriod "' +
-                                     self.__guardian.StartTime + '" "' +
-                                     self.__guardian.StopTime + '"')
+                                     self.__guardian.GetReference().StartTime + '" "' +
+                                     self.__guardian.GetReference().StopTime + '"')
         except COMError:
             raise (RuntimeError, "Failure to add satellite. Check formatting of TLE.")
     
@@ -150,7 +141,7 @@ class Satellite:
 
     def GetAccess(self, areaTarget):
 
-        root = self.__guardian.root
+        root = self.__guardian.GetGuardian().root
 
         root.BeginUpdate()
 
@@ -168,6 +159,15 @@ class Satellite:
             root.EndUpdate()
 
             return 0
+        
+    def ComputeDSInfo(self, areaTarget, passArray):
+
+        startTime = passArray[0]
+        endTime = passArray[1]
+
+        keplerians = self.ComputeKeplerians(startTime)
+
+        return [areaTarget.ID, areaTarget.center, keplerians, (startTime, endTime)]
 
     def GetGuardian(self):
         return self.__guardian
