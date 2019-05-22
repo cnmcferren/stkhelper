@@ -10,7 +10,7 @@ setup(
       long_description_content_type='text/markdown',
       author='W. Conor McFerren',
       author_email='cnmcferren@gmail.com',
-      url="https://github.com/cnmcferren/stkhelperRevised",
+      url="https://github.com/cnmcferren/stkhelper",
       packages=find_packages(),
       install_requires=[
           'comtypes',

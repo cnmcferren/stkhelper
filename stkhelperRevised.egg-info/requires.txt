@@ -1,2 +1,0 @@
-comtypes
-pypiwin32
