@@ -104,10 +104,10 @@ class Camera:
 class Satellite:
 
     def __init__(self, scenario, name, sscNumber):
-        self.__guardian = scenario.GetGuardian()
+        self.__guardian = scenario
         self.name = name
 
-        root = self.__guardian.root
+        root = self.__guardian.GetGuardian().root
 
         TLE_Manager.GenerateTLE(self.__guardian, str(sscNumber))
         self.tle = TLE_Manager.ParseTLE(str(sscNumber) + ".tle")
