@@ -13,7 +13,7 @@ class AreaTarget:
     def __init__(self, scenario, parsedLine):
         self.__guardian = scenario
         
-        root = self.__guardian.root
+        root = self.__guardian.GetGuardian().root
         
         root.BeginUpdate()
         
@@ -89,27 +89,24 @@ class Camera:
 
             return 0
 
-    def ComputeDSInfo(self, areaTarget, passArray):
-
-        startTime = passArray[0]
-        endTime = passArray[1]
-
-        keplerians = self.ComputeKeplerians(startTime)
-
-        return [areaTarget.ID, areaTarget.center, keplerians, (startTime, endTime)]
-
+    def GetCamera(self):
+        return self.__camera
+    
+    def GetCameraGen(self):
+        return self.__cameraGen
+    
     def GetGuardian(self):
         return self.__guardian
 
 class Satellite:
 
     def __init__(self, scenario, name, sscNumber):
-        self.__guardian = scenario.GetGuardian()
+        self.__guardian = scenario
         self.name = name
 
-        root = self.__guardian.root
+        root = self.__guardian.GetGuardian().root
 
-        TLE_Manager.GenerateTLE(self.__guardian, str(sscNumber))
+        TLE_Manager.GenerateTLE(self.__guardian.GetGuardian().root, str(sscNumber))
         self.tle = TLE_Manager.ParseTLE(str(sscNumber) + ".tle")
         
         try:
@@ -120,10 +117,10 @@ class Satellite:
             
         try:
             root.ExecuteCommand('SetState */Satellite/' + self.name + ' TLE "' +
-                                     tle[0] + '" "' + tle[1] +
+                                     self.tle[0] + '" "' + self.tle[1] +
                                      '" TimePeriod "' +
-                                     self.__guardian.StartTime + '" "' +
-                                     self.__guardian.StopTime + '"')
+                                     self.__guardian.GetReference().StartTime + '" "' +
+                                     self.__guardian.GetReference().StopTime + '"')
         except COMError:
             raise (RuntimeError, "Failure to add satellite. Check formatting of TLE.")
     
@@ -142,7 +139,7 @@ class Satellite:
         inc = result.DataSets.GetDataSetByName('Inclination').GetValues()
         raan = result.DataSets.GetDataSetByName('RAAN').GetValues()
         aop = result.DataSets.GetDataSetByName('Arg of Perigee').GetValues()
-        trueAnomoly = result.DataSets.GetDataSetByName('True Anomaly').GetValues()
+        trueAnomaly = result.DataSets.GetDataSetByName('True Anomaly').GetValues()
 
         arr = [time,sma,ecc,inc,raan,aop,trueAnomaly]
         
@@ -150,7 +147,7 @@ class Satellite:
 
     def GetAccess(self, areaTarget):
 
-        root = self.__guardian.root
+        root = self.__guardian.GetGuardian().root
 
         root.BeginUpdate()
 
@@ -168,6 +165,19 @@ class Satellite:
             root.EndUpdate()
 
             return 0
+        
+    def ComputeDSInfo(self, areaTarget, passArray):
 
+        startTime = passArray[0]
+        endTime = passArray[1]
+
+        keplerians = self.ComputeKeplerians(startTime)
+
+        return [areaTarget.ID, areaTarget.center, keplerians, (startTime, endTime)]
+
+    def GetReference(self):
+        
+        return self.__satellite
+    
     def GetGuardian(self):
         return self.__guardian
