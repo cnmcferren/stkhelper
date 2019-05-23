@@ -1,5 +1,6 @@
 README.md
 setup.cfg
+setup.py
 stkhelper/__init__.py
 stkhelper/application.py
 stkhelper/scenario.py
