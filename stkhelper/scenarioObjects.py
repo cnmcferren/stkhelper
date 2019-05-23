@@ -6,8 +6,30 @@ from comtypes import COMErrorpi
 
 from toolbox import TLE_Manager, Toolbox
 
+__author__ = "W. Conor McFerren"
+__maintainer__ = "W. Conor McFerren"
+__email__ = "cnmcferren@gmail.com"
+
+"""
+
+Area target class that holds the reference for area targets
+to be added to the scenario.
+
+"""
+
 class AreaTarget:
-    
+   
+    """
+
+    Creates an AreaTarget object.
+
+    Parameters:
+        scenario (STKObjects.IAgScenario): Scenario for the area target
+                                        to be placed in.
+        parsedLine (list): Line parsed from the Target List.
+
+    """
+
     def __init__(self, scenario, parsedLine):
         self.__guardian = scenario
         
@@ -37,20 +59,64 @@ class AreaTarget:
         
         root.EndUpdate()
 
+    """
+
+    Returns the reference to the area target object.
+
+    Returns:
+        self.__areaTarget: The reference to the area target objects.
+
+    """
+
     def GetTarget(self):
 
         return self.__areaTarget
+
+    """
+
+    Returns the patterns for the area target objects.
+
+    Returns:
+        self.__patterns: The reference to the patterns
+
+    """
 
     def GetPatterns(self):
 
         return self.__patterns
 
+    """
+
+    Returns the guardian of the class (the scenario).
+
+    Returns:
+        self.__guardian: The scenario the area target is in.
+
+    """
+
     def GetGuardian(self):
 
         return self.__guardian
-    
+
+"""
+
+The camera that can be added to a satellite object.
+
+"""
+
 class Camera:
-    
+
+    """
+
+    Creation of the camera.
+
+    Parameters:
+        hostSat (STKObjects.eSatellite): The satellite that the camera is to be attached to.
+        name (str): A new and unique name of the camera.
+        fov (list): A list containing the field of view width and height.
+
+    """
+
     def __init__(self, hostSat, name, fov):
         self.__guardian = hostSat
         
@@ -67,7 +133,22 @@ class Camera:
         self.__camera.CommonTasks.SetPatternRectangular(fov[0],fov[1])
         
         root.EndUpdate()
-       
+    
+    """
+
+    Computes the access to an area target with the camera during the time
+    interval of the scenario. 
+
+    Parameters:
+        areaTarget (STKObjects.IAgAreaTarget): The area target that access
+                                            is to be computed to.
+
+    Returns:
+        comptuedIntervals: An array containing the start and end time of
+                        all passes within the scenario's time interval.
+
+    """
+
     def GetAccess(self, areaTarget):
 
         root = self.__guardian.GetGuardian().GetGuardian().root
@@ -86,17 +167,61 @@ class Camera:
             root.EndUpdate()
 
             return 0
-        
+    
+    """
+
+    Returns the reference to the camera.
+
+    Returns: 
+        self.__camera: Returns the camera of type STKObjects.IAgSensor.
+
+    """
+
     def GetCamera(self):
         return self.__camera
     
+    """
+
+    Returns the general camera.
+
+    Returns:
+        self.__cameraGen: The camera but of a general type.
+
+    """
+
     def GetCameraGen(self):
         return self.__cameraGen
     
+    """
+
+    Returns the guardian of the camera.
+
+    Returns
+        self.__guardian: The satellite that is the guardian of the camera.
+
+    """
+
     def GetGuardian(self):
         return self.__guardian
 
+"""
+
+The satellite that is to be placed into a scenario.
+
+"""
+
 class Satellite:
+
+    """
+
+    Creates a satellite to be added to the scenario
+    
+    Parameters:
+        scenario (STKObjects.IAgScenario): The scenario that the satellite will be placed in.
+        name (str): The unique name of the satellite.
+        sscNumber (str or int): The SSC Number of the satellite to model the orbit of.
+
+    """
 
     def __init__(self, scenario, name, sscNumber):
         self.__guardian = scenario
@@ -122,6 +247,16 @@ class Satellite:
         except COMError:
             raise (RuntimeError, "Failure to add satellite. Check formatting of TLE.")
     
+    """
+
+    Computes the Keplerian parameters for the satellite at a time instant.
+
+    Parameters:
+        timeInstant (str): The time instant for the Keplerians to be computed
+                        in the format that STK provides.
+
+    """
+
     def ComputeKeplerians(self, timeInstant):
         
         satDPSingle = self.__satellite.DataProviders.Item('Classical Elements')
@@ -143,6 +278,18 @@ class Satellite:
         
         return arr
 
+    """
+
+    Computes access to the area target provided over the time interval of the scenario.
+
+    Parameters:
+        areaTarget (AreaTarget): The area target to compute access to.
+
+    Returns:
+        computedIntervals (list): The time intervals of the access times.
+
+    """
+
     def GetAccess(self, areaTarget):
 
         root = self.__guardian.GetGuardian().root
@@ -163,7 +310,23 @@ class Satellite:
             root.EndUpdate()
 
             return 0
-        
+    
+    """
+
+    Computes the information for the dynamic simulations.
+
+    Parameters:
+        areaTarget (AreaTarget): The area target that is going to be used 
+                            in the dynamic simulations.
+        passArray (list): The list that contains the start and end time
+                        for a pass over the given area target.
+
+    Returns:
+        List in the following format:
+            [areaTarget.ID, areaTarget.center, keplerians, (startTime, endTime)]
+
+    """
+
     def ComputeDSInfo(self, areaTarget, passArray):
 
         startTime = passArray[0]
@@ -178,9 +341,27 @@ class Satellite:
 
         return [areaTarget.ID, areaTarget.center, keplerians, (startTime, endTime)]
 
+    """
+
+    Get reference to the satellite.
+
+    Returns:
+        self.__satellite: Returns the reference to the STKObjects.eSatellite.
+
+    """
+
     def GetReference(self):
         
         return self.__satellite
     
+    """
+
+    Returns the guardian of the satellite object (the scenario).
+
+    Returns:
+        self.__guardian: The scenario that the satellite is in.
+
+    """
+
     def GetGuardian(self):
         return self.__guardian

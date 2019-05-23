@@ -1,9 +1,33 @@
+"""
+
+Holds the scenario that that is added to the instance of the application.
+
+Scenario holds the simulations and all objects within (such as satellites,
+area targets, cameras, etc.).
+
+"""
 from win32api import GetSystemMetrics
 from comtypes.client import CreateObject
 from comtypes.gen import STKObjects
 from comtypes import COMError
 
+__author__ = "W. Conor McFerren"
+__maintainer__ = "W. Conor McFerren"
+__email__ = "cnmcferren@gmail.com"
+
 class Scenario:
+
+    """
+
+    Creates an instance of the scenario.
+
+    Parameters:
+        application (STK11 Instance): Running instance of STK 11.
+        name (str): Name of the scenario to be created.
+        timePeriod (str): The amount of time you want the scenario to run for.
+                        Examples: "+24hr", "+365days", "+10days".
+
+    """
 
     def __init__(self, application, name, timePeriod):
         
@@ -19,16 +43,50 @@ class Scenario:
         except COMError:
             raise ValueError, "Time period not properly formatted"
 
+    """
+
+    Sets a new time period for the scenario.
+
+    Parameters:
+        elapsedTime (str): The amound of time you want the scenario to run for.
+                        Examples: "+24hr", "+365days", "+10days".
+
+    """
+
     def SetTimePeriod(self, elapsedTime):
 
         self.__scenario.SetTimePeriod('Today',str(elapsedTime))
-        
+       
+    """
+
+    Gets the reference variable for the scenario.
+
+    Returns:
+        self.__scenario (STKObjects.IAgScenario): The currenting running scenario.
+
+    """
+
     def GetReference(self):
         return self.__scenario
 
+    """
+
+    Closes the scenario.
+
+    """
+    
     def Close(self):
 
         self.__guardian.root.CloseScenario()
+
+    """
+
+    Returns the guardian of the scenario class, which is the application.
+
+    Returns:
+        self.__guardian (STK11 Instances): The running application.
+
+    """
 
     def GetGuardian(self):
         return self.__guardian
