@@ -14,5 +14,6 @@ setup(
       packages=find_packages(),
       install_requires=[
           'comtypes',
-          'pypiwin32']
+          'pypiwin32',
+          'os']
 )
