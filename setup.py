@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 info = open('README.md').read()
 
 setup(
-      name='stkhelperRevised',
+      name='stkhelper',
       version='0.0.1',
       description='Uses the STK software to create simulations for satellite testing',
       long_description=info,

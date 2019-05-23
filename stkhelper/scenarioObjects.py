@@ -60,32 +60,32 @@ class Camera:
                 (type(fov[1]) == int or type(fov[1]) == float)):
             raise TypeError, "Field of View parameters of invalid type."
         
-        root = self.__guardian.GetGuardian().root
+        root = self.__guardian.GetGuardian().GetGuardian().root
         
         root.BeginUpdate()
         
-        self.__cameraGen = self.__guardian.Children.New(20,name)
-        self.__camera = __cameraGen.QueryInterface(STKObjects.IAgSensor)
+        self.__cameraGen = self.__guardian.GetReference().Children.New(20,name)
+        self.__camera = self.__cameraGen.QueryInterface(STKObjects.IAgSensor)
         self.__camera.CommonTasks.SetPatternRectangular(fov[0],fov[1])
         
         root.EndUpdate()
        
     def GetAccess(self, areaTarget):
 
-        root = self.__guardian.GetGuardian().root
+        root = self.__guardian.GetGuardian().GetGuardian().root
         
         root.BeginUpdate()
 
         access = self.__cameraGen.GetAccessToObject(areaTarget.GetTarget())
         access.ComputeAccess()
-        intervalCollection = access.ComputedAccessIntervalCollection
+        intervalCollection = access.ComputedAccessIntervalTimes
         try:
             computedIntervals = intervalCollection.ToArray(0,-1)
-            root.BeginUpdate()
+            root.EndUpdate()
 
             return computedIntervals
         except:
-            root.BeginUpdate()
+            root.EndUpdate()
 
             return 0
         
