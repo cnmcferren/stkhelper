@@ -88,7 +88,13 @@ class Camera:
             root.BeginUpdate()
 
             return 0
-
+        
+    def GetCamera(self):
+        return self.__camera
+    
+    def GetCameraGen(self):
+        return self.__cameraGen
+    
     def GetGuardian(self):
         return self.__guardian
 
@@ -169,5 +175,14 @@ class Satellite:
 
         return [areaTarget.ID, areaTarget.center, keplerians, (startTime, endTime)]
 
+
+        keplerians = self.ComputeKeplerians(startTime)
+
+        return [areaTarget.ID, areaTarget.center, keplerians, (startTime, endTime)]
+
+    def GetReference(self):
+        
+        return self.__satellite
+    
     def GetGuardian(self):
         return self.__guardian
