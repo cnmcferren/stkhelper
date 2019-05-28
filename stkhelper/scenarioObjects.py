@@ -259,6 +259,8 @@ class Satellite:
 
     def ComputeKeplerians(self, timeInstant):
         
+        ##TODO: Check time is in correct 24hr clock format
+        
         satDPSingle = self.__satellite.DataProviders.Item('Classical Elements')
         satDPSingle = satDPSingle.QueryInterface(STKObjects.IAgDataProviderGroup)
         ceicrf = satDPSingle.Group.Item('ICRF')
