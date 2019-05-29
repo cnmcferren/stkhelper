@@ -2,7 +2,7 @@
 from win32api import GetSystemMetrics
 from comtypes.client import CreateObject
 from comtypes.gen import STKObjects
-from comtypes import COMErrorpi
+from comtypes import COMError
 
 from toolbox import TLE_Manager, Toolbox
 
