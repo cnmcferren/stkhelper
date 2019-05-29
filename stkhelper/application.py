@@ -8,6 +8,9 @@ class Application:
         self.__uiApplication.UserControl = True
         
         self.root = self.__uiApplication.Personality2
+        
+    def Connect(self, connectCommand):
+        self.root.ExecuteCommand(connectCommand)
 
     def Close(self):
 
