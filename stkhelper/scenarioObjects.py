@@ -58,6 +58,23 @@ class AreaTarget:
         self.__areaTarget.AutoCentroid = True
         
         root.EndUpdate()
+    
+    """
+
+    Adds elevation constraint for access.
+    
+    Parameters:
+        angle (float or str): Angle of constraint.
+        
+
+    """ 
+    
+    def SetElevationConstraint(self, angle):
+    
+        #TODO Test method
+        self.root.ExecuteCommand("SetoConstraint " + \
+                                 "*/AreaTarget/" + str(self.ID) + \
+                                 " ElevationAngle " + str(angle))
 
     """
 
@@ -67,7 +84,7 @@ class AreaTarget:
         self.__areaTarget: The reference to the area target objects.
 
     """
-
+    
     def GetTarget(self):
 
         return self.__areaTarget
