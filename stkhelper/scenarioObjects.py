@@ -238,7 +238,7 @@ class Camera:
 
 class Satellite:
 
-    def __init__(self, scenario, name, sscNumber):
+    def __init__(self, scenario, name, sscNumber,StartTime=None,StopTime=None):
         """
 
         Creates a satellite to be added to the scenario
@@ -257,7 +257,11 @@ class Satellite:
 
         TLE_Manager.GenerateTLE(self.root, str(sscNumber))
         self.tle = TLE_Manager.ParseTLE(str(sscNumber) + ".tle")
-        
+        if StartTime == None:
+            StartTime = self.__guardian.GetReference().StartTime
+        if StopTime == None:
+            StopTime = self.__guardian.GetReference().StopTime
+            
         try:
             self.__satellite = self.root.CurrentScenario.Children.New(STKObjects.eSatellite, name)
         except COMError:
@@ -268,8 +272,8 @@ class Satellite:
             self.root.ExecuteCommand('SetState */Satellite/' + self.name + ' TLE "' +
                                      self.tle[0] + '" "' + self.tle[1] +
                                      '" TimePeriod "' +
-                                     self.__guardian.GetReference().StartTime + '" "' +
-                                     self.__guardian.GetReference().StopTime + '"')
+                                     StartTime + '" "' +
+                                     StopTime + '"')
         except COMError:
             raise (RuntimeError, "Failure to add satellite. Check formatting of TLE.")
 
