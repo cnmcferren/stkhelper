@@ -104,31 +104,15 @@ class Toolbox:
     
     @staticmethod
     def CompareTime(time1,time2):
-        time1Elems = [time1.year,
-                     time1.month,
-                     time1.day,
-                     time1.hour,
-                     time1.minute,
-                     time1.second,
-                     time1.microsecond]
-        
-        time2Elems = [time2.year,
-                     time2.month,
-                     time2.day,
-                     time2.hour,
-                     time2.minute,
-                     time2.second,
-                     time2.microsecond]
-        
-        for i in range(len(time1Elems)):
-            if time1Elems[i] > time2Elems[i]:
-                return True
-            else:
-                pass
-            
-        return False
-        
 
+        time1Delta = (time1 - datetime.datetime(1970,1,1)).total_seconds()
+        time2Delta = (time2 - datetime.datetime(1970,1,1)).total_seconds()
+        
+        if time1Delta > time2Delta:
+            return True
+        else:
+            return False
+        
     """
     
     Converts time from STK format to datetime objects.
@@ -157,6 +141,13 @@ class Toolbox:
                      "Dec": 12}
         
         time1 = str(time1)
+        time1 = time1\
+        .replace('(','')\
+        .replace(')','')\
+        .replace("'",'')\
+        .replace(',','')
+        if time1[0] == 'u':
+            time1 = time1[1:]
         
         splitTime1 = time1.split(' ')
         day1 = splitTime1[0]
@@ -178,7 +169,7 @@ class Toolbox:
                 hour=int(hours1),
                 minute=int(minutes1),
                 second=int(seconds1),
-                microsecond=int(microseconds1))
+                microsecond=int(microseconds1) * 1000)
         
         return timeObj1
     
@@ -208,4 +199,63 @@ class Toolbox:
         (0.001*float(timeDiff.microseconds))
                     
         return deltat
+    
+    """
+    
+    For adding access array to a singluar array.
+    
+    Parameters:
+        *args (list): Lists containing the the name and access array in the 
+        following format:
+            [name, accessArray]
+    
+    Returns:
+        addedArray (list): The array containing all the added access times.
         
+    """
+    @staticmethod
+    def AddAccessArrays(*args):
+        addedArray = []
+        if len(args) == 1:
+            for accessArray in args[1]:
+                for line in accessArray[1]:
+                    outputLine = [line[0],line[1],accessArray[0]]
+                    addedArray.append(outputLine)
+                
+            return addedArray
+        else:    
+            for accessArray in args:
+                for line in accessArray[1]:
+                    outputLine = [line[0],line[1],accessArray[0]]
+                    addedArray.append(outputLine)
+                
+            return addedArray
+
+    @staticmethod
+    def SortAllAccess(allAccessArray):
+        outputArray = allAccessArray
+        for i in range(len(outputArray)):
+            for j in range(0,len(outputArray)-1):
+                time1 = outputArray[j] #Full pass array
+                time2 = outputArray[j+1] #Full pass array
+                time1D = Toolbox.ConvertTime(time1[0]) #Datetime objects of first contact
+                time2D = Toolbox.ConvertTime(time2[0]) #Datetime objects of first contact
+                
+                if Toolbox.CompareTime(time1D,time2D):
+                    outputArray[j] = time2
+                    outputArray[j+1] = time1
+                    
+        return outputArray
+    
+    @staticmethod
+    def AccessToCSV(accessArray,outputFilename):
+        outputFile = open(outputFilename,'w')
+        for i in range(len(accessArray)):
+            for n in range(len(accessArray[i])):
+                if n == len(accessArray[i])-1:
+                    delimiter = '\n'
+                else:
+                    delimiter = ','
+                outputFile.write(str(accessArray[i][n]) + delimiter)
+                
+        outputFile.close()

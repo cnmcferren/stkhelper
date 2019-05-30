@@ -70,6 +70,12 @@ class AreaTarget:
             self.root.EndUpdate()
             
         elif not name == None and not coordList == None:
+            
+            for i in range(len(coordList)):
+                coordList[i] = coordList[i].split(',')
+                coordList[i][0] = float(coordList[i][0])
+                coordList[i][1] = float(coordList[i][1])
+                
             self.root.BeginUpdate()
             
             self.ID = name
@@ -87,7 +93,7 @@ class AreaTarget:
             
             self.center = Toolbox.ComputeCenterTarget(coordList)
             
-            self.root.BeginUpdate()
+            self.root.EndUpdate()
     
     """
 
@@ -336,25 +342,53 @@ class Satellite:
 
     """
 
-    def GetAccess(self, areaTarget):
+    def GetAccess(self, areaTargets):
+        #If it is a single areaTarget.
+        #TODO add name to end of all accesses for single area target
+        if not isinstance(areaTargets,list):
+            self.root.BeginUpdate()
 
-        self.root.BeginUpdate()
+            access = self.__satellite.GetAccessToObject(areaTargets.GetTarget())
+            access.ComputeAccess()
 
-        access = self.__satellite.GetAccessToObject(areaTarget.GetTarget())
-        access.ComputeAccess()
+            intervalCollection = access.ComputedAccessIntervalTimes
+            
+            try:
+                computedIntervals = intervalCollection.ToArray(0,-1)
+                self.root.EndUpdate()
 
-        intervalCollection = access.ComputedAccessIntervalTimes
+                return computedIntervals
+            except Exception:
+                self.root.EndUpdate()
 
-        try:
-            computedIntervals = intervalCollection.ToArray(0,-1)
+                return 0
+            
+        #If it is a list of areaTargets.
+        else:
+            accessArrays = []
+            self.root.BeginUpdate()
+            
+            #Iterate each area target
+            for areaTarget in areaTargets:
+                access = self.__satellite.GetAccessToObject(areaTarget.GetTarget())
+                access.ComputeAccess()
+
+                intervalCollection = access.ComputedAccessIntervalTimes
+            
+                try:
+                    computedIntervals = intervalCollection.ToArray(0,-1)
+                    for line in computedIntervals:
+                        line = line + (areaTarget.ID,)
+                        accessArrays.append(line)
+                    
+                except Exception as e:
+                    print(e.message)
+                    pass
+                
             self.root.EndUpdate()
-
-            return computedIntervals
-        except Exception:
-            self.root.EndUpdate()
-
-            return 0
-    
+            return Toolbox.SortAllAccess(accessArrays)
+            
+            
     """
 
     Computes the information for the dynamic simulations.
