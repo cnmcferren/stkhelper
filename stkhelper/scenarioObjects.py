@@ -27,54 +27,83 @@ class AreaTarget:
         scenario (STKObjects.IAgScenario): Scenario for the area target
                                         to be placed in.
         parsedLine (list): Line parsed from the Target List.
+        name (str): Name of the satellite
+        coordList (list): List of coordinate points in the following form:
+            [(lat0,lon0),(lat1,lon1),...(latN,lonN)].
 
     """
 
-    def __init__(self, scenario, parsedLine):
+    #TODO Testing required for different methods
+    def __init__(self, scenario, name=None, coordList = None, parsedLine=None):
         self.__guardian = scenario
         
-        root = self.__guardian.GetGuardian().root
+        self.root = self.__guardian.GetGuardian().root
+        if not parsedLine == None:
         
-        root.BeginUpdate()
+            self.root.BeginUpdate()
         
-        self.ID = parsedLine[1]
-        startLat = parsedLine[8]
-        startLon = parsedLine[9]
-        endLat = parsedLine[10]
-        endLon = parsedLine[11]
-        
-        self.center =Toolbox.ComputeCenterTarget(parsedLine)
+            self.ID = parsedLine[1]
+            startLat = parsedLine[8]
+            startLon = parsedLine[9]
+            endLat = parsedLine[10]
+            endLon = parsedLine[11]
 
-        self.__areaTarget = root.CurrentScenario.Children.New(STKObjects.eAreaTarget,self.ID)
-        self.__areaTarget = self.__areaTarget.QueryInterface(STKObjects.IAgAreaTarget)
-        self.__areaTarget.AreaType = STKObjects.ePattern
-        self.__patterns = self.__areaTarget.AreaTypeData
-        self.__patterns = self.__patterns.QueryInterface(STKObjects.IAgAreaTypePatternCollection)
+            points = [(startLat,startLon),
+                      (startLat,endLon),
+                      (endLat,endLon),
+                      (endLat,startLon)]
+            
+            self.center =Toolbox.ComputeCenterTarget(points)
+
+            self.__areaTarget = self.root.CurrentScenario.Children.New(STKObjects.eAreaTarget,self.ID)
+            self.__areaTarget = self.__areaTarget.QueryInterface(STKObjects.IAgAreaTarget)
+            self.__areaTarget.AreaType = STKObjects.ePattern
+            self.__patterns = self.__areaTarget.AreaTypeData
+            self.__patterns = self.__patterns.QueryInterface(STKObjects.IAgAreaTypePatternCollection)
         
-        self.__patterns.Add(startLat,startLon)
-        self.__patterns.Add(startLat,endLon)
-        self.__patterns.Add(endLat,endLon)
-        self.__patterns.Add(endLat,startLon)
-        self.__areaTarget.AutoCentroid = True
+            self.__patterns.Add(points[0][0],points[0][1])
+            self.__patterns.Add(points[1][0],points[1][1])
+            self.__patterns.Add(points[2][0],points[2][1])
+            self.__patterns.Add(points[3][0],points[3][1])
+            self.__areaTarget.AutoCentroid = True
         
-        root.EndUpdate()
+            self.root.EndUpdate()
+            
+        elif not name == None and not coordList == None:
+            self.root.BeginUpdate()
+            
+            self.ID = name
+            
+            self.__areaTarget = self.root.CurrentScenario.Children.New(STKObjects.eAreaTarget,self.ID)
+            self.__areaTarget = self.__areaTarget.QueryInterface(STKObjects.IAgAreaTarget)
+            self.__areaTarget.AreaType = STKObjects.ePattern
+            self.__patterns = self.__areaTarget.AreaTypeData
+            self.__patterns = self.__patterns.QueryInterface(STKObjects.IAgAreaTypePatternCollection)
+            
+            for point in coordList:
+                self.__patterns.Add(point[0],point[1])
+                
+            self.__areaTarget.AutoCentroid = True
+            
+            self.center = Toolbox.ComputeCenterTarget(coordList)
+            
+            self.root.BeginUpdate()
     
     """
 
     Adds elevation constraint for access.
     
     Parameters:
-        angle (float or str): Angle of constraint.
+        angle (float or str): Angle of constraint (measured from horizon).
         
 
     """ 
     
     def SetElevationConstraint(self, angle):
-    
-        #TODO Test method
-        self.root.ExecuteCommand("SetoConstraint " + \
+
+        self.root.ExecuteCommand("SetConstraint " + \
                                  "*/AreaTarget/" + str(self.ID) + \
-                                 " ElevationAngle " + str(angle))
+                                 " ElevationAngle " + str(float(angle)))
 
     """
 
@@ -141,15 +170,15 @@ class Camera:
                 (type(fov[1]) == int or type(fov[1]) == float)):
             raise TypeError, "Field of View parameters of invalid type."
         
-        root = self.__guardian.GetGuardian().GetGuardian().root
+        self.root = self.__guardian.GetGuardian().GetGuardian().root
         
-        root.BeginUpdate()
+        self.root.BeginUpdate()
         
         self.__cameraGen = self.__guardian.GetReference().Children.New(20,name)
         self.__camera = self.__cameraGen.QueryInterface(STKObjects.IAgSensor)
         self.__camera.CommonTasks.SetPatternRectangular(fov[0],fov[1])
         
-        root.EndUpdate()
+        self.root.EndUpdate()
     
     """
 
@@ -168,20 +197,18 @@ class Camera:
 
     def GetAccess(self, areaTarget):
 
-        root = self.__guardian.GetGuardian().GetGuardian().root
-        
-        root.BeginUpdate()
+        self.root.BeginUpdate()
 
         access = self.__cameraGen.GetAccessToObject(areaTarget.GetTarget())
         access.ComputeAccess()
         intervalCollection = access.ComputedAccessIntervalTimes
         try:
             computedIntervals = intervalCollection.ToArray(0,-1)
-            root.EndUpdate()
+            self.root.EndUpdate()
 
             return computedIntervals
         except:
-            root.EndUpdate()
+            self.root.EndUpdate()
 
             return 0
     
@@ -244,19 +271,19 @@ class Satellite:
         self.__guardian = scenario
         self.name = name
 
-        root = self.__guardian.GetGuardian().root
+        self.root = self.__guardian.GetGuardian().root
 
-        TLE_Manager.GenerateTLE(self.__guardian.GetGuardian().root, str(sscNumber))
+        TLE_Manager.GenerateTLE(self.root, str(sscNumber))
         self.tle = TLE_Manager.ParseTLE(str(sscNumber) + ".tle")
         
         try:
-            self.__satellite = root.CurrentScenario.Children.New(STKObjects.eSatellite, name)
+            self.__satellite = self.root.CurrentScenario.Children.New(STKObjects.eSatellite, name)
         except COMError:
             raise (RuntimeError,'\nIncorrect name format or name already taken for satellite.' + 
                   ' Please do not use spaces or reuse satellite names.')
             
         try:
-            root.ExecuteCommand('SetState */Satellite/' + self.name + ' TLE "' +
+            self.root.ExecuteCommand('SetState */Satellite/' + self.name + ' TLE "' +
                                      self.tle[0] + '" "' + self.tle[1] +
                                      '" TimePeriod "' +
                                      self.__guardian.GetReference().StartTime + '" "' +
@@ -311,9 +338,7 @@ class Satellite:
 
     def GetAccess(self, areaTarget):
 
-        root = self.__guardian.GetGuardian().root
-
-        root.BeginUpdate()
+        self.root.BeginUpdate()
 
         access = self.__satellite.GetAccessToObject(areaTarget.GetTarget())
         access.ComputeAccess()
@@ -322,11 +347,11 @@ class Satellite:
 
         try:
             computedIntervals = intervalCollection.ToArray(0,-1)
-            root.EndUpdate()
+            self.root.EndUpdate()
 
             return computedIntervals
         except Exception:
-            root.EndUpdate()
+            self.root.EndUpdate()
 
             return 0
     

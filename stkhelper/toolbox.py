@@ -1,5 +1,6 @@
 
 import os
+import datetime
 
 class TLE_Manager:
     
@@ -64,7 +65,7 @@ class TLE_Manager:
 class Toolbox:
 
     @staticmethod
-    def ComputeCenterTarget(parsedLine):
+    def ComputeCenterTarget(coordList):
         
         """
         
@@ -77,15 +78,14 @@ class Toolbox:
             midPoint (list): List containing name and coordinates of the middle of the area target.
             
         """
+        latSum = 0.0
+        lonSum = 0.0
+        for point in coordList:
+            latSum = latSum + float(point[0])
+            lonSum = lonSum + float(point[0])
         
-        name = parsedLine[0]
-        startLat = parsedLine[8]
-        startLon = parsedLine[9]
-        endLat = parsedLine[10]
-        endLon = parsedLine[11]
-        
-        midLat = (float(startLat) + float(endLat))/2.0
-        midLon = (float(startLon) + float(endLon))/2.0
+        midLat = latSum/float(len(coordList))
+        midLon = lonSum/float(len(coordList))
         
         return (midLat,midLon)
     
