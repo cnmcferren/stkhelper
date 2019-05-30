@@ -4,7 +4,7 @@ info = open('README.md').read()
 
 setup(
       name='stkhelper',
-      version='2.0.5',
+      version='2.1.1',
       description='Uses the STK software to create simulations for satellite testing',
       long_description=info,
       long_description_content_type='text/markdown',
@@ -14,5 +14,6 @@ setup(
       packages=find_packages(),
       install_requires=[
           'comtypes',
-          'pypiwin32']
+          'pypiwin32',
+          'datetime']
 )
