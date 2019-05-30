@@ -13,14 +13,12 @@ __maintainer__ = "W. Conor McFerren"
 __email__ = "cnmcferren@gmail.com"
 
 class Application:
+    def __init__(self):       
+        """
 
-    """
+        Application that holds the STK11 application.
 
-    Application that holds the STK11 application.
-
-    """
-
-    def __init__(self):
+        """
         self.__uiApplication = CreateObject("STK11.Application")
         self.__uiApplication.Visible = True
         self.__uiApplication.UserControl = True
@@ -28,14 +26,21 @@ class Application:
         self.root = self.__uiApplication.Personality2
         
     def Connect(self, connectCommand):
+        """
+        
+        Used to run STK Connect Commands
+        
+        Parameters:
+            connectCommand (str): The string Connect Command.
+        
+        """
         self.root.ExecuteCommand(connectCommand)
 
-    """
+    def Close(self):     
+        """
 
-    Closes the application.
+        Closes the application.
 
-    """
-
-    def Close(self):
+       """
 
         self.__uiApplication.Quit()

@@ -89,21 +89,20 @@ class Toolbox:
         
         return (midLat,midLon)
     
-    """
-    Compares if time1 is greater than time2. If it is, it returns true. If
-    it is not, it returns false.
-    
-    Parameters:
-        time1 (datetime): Object to test.
-        time2 (datetime): Object to compare to time1.
-        
-    Returns:
-        True if time1 is greater than time2. Otherwise, it returns false.
-        
-    """
-    
     @staticmethod
-    def CompareTime(time1,time2):
+    def CompareTime(time1,time2):       
+        """
+        Compares if time1 is greater than time2. If it is, it returns true. If
+        it is not, it returns false.
+        
+        Parameters:
+            time1 (datetime): Object to test.
+            time2 (datetime): Object to compare to time1.
+            
+            Returns:
+                True if time1 is greater than time2. Otherwise, it returns false.
+        
+        """
 
         time1Delta = (time1 - datetime.datetime(1970,1,1)).total_seconds()
         time2Delta = (time2 - datetime.datetime(1970,1,1)).total_seconds()
@@ -112,21 +111,20 @@ class Toolbox:
             return True
         else:
             return False
-        
-    """
-    
-    Converts time from STK format to datetime objects.
-    
-    Parameters:
-        time1 (str): The time string from STK.
-        
-    Returns:
-        timeObj1 (datetime): The datetime objects.
-        
-    """
     
     @staticmethod    
-    def ConvertTime(time1):
+    def ConvertTime(time1):              
+        """
+    
+        Converts time from STK format to datetime objects.
+    
+        Parameters:
+            time1 (str): The time string from STK.
+        
+        Returns:
+            timeObj1 (datetime): The datetime objects.
+        
+        """
         monthDict = {"Jan": 1,
                      "Feb": 2,
                      "Mar": 3,
@@ -175,7 +173,6 @@ class Toolbox:
     
     @staticmethod
     def GetTimeDelta(timeArray):
-        
         """
         
         Computes the time difference between to time instances from STK.
@@ -199,22 +196,23 @@ class Toolbox:
         (0.001*float(timeDiff.microseconds))
                     
         return deltat
-    
-    """
-    
-    For adding access array to a singluar array.
-    
-    Parameters:
-        *args (list): Lists containing the the name and access array in the 
-        following format:
-            [name, accessArray]
-    
-    Returns:
-        addedArray (list): The array containing all the added access times.
-        
-    """
+
     @staticmethod
-    def AddAccessArrays(*args):
+    def AddAccessArrays(*args):        
+        """
+    
+        For adding access array to a singluar array.
+        
+        Parameters:
+            *args (list): Lists containing the the name and access array in the 
+            following format:
+                [name, accessArray]
+                
+        Returns:
+            addedArray (list): The array containing all the added access times.
+        
+        """
+        
         addedArray = []
         if len(args) == 1:
             for accessArray in args[1]:
@@ -233,6 +231,19 @@ class Toolbox:
 
     @staticmethod
     def SortAllAccess(allAccessArray):
+        """
+        
+        Sorts an array containg access times into chronological order based
+        on the start time of the pass.
+        
+        Parameters:
+            allAccessArray (list): List of all access.
+        
+        Returns:
+            outputArray: The sorted access array.
+            
+        """
+        
         outputArray = allAccessArray
         for i in range(len(outputArray)):
             for j in range(0,len(outputArray)-1):
@@ -249,6 +260,16 @@ class Toolbox:
     
     @staticmethod
     def AccessToCSV(accessArray,outputFilename):
+        """
+        
+        Writes access to a CSV file.
+        
+        Parameters:
+            accessArray (list): List of all access times.
+            outputFilename (str): Name of the csv file to be written.
+            
+        """
+        
         outputFile = open(outputFilename,'w')
         for i in range(len(accessArray)):
             for n in range(len(accessArray[i])):

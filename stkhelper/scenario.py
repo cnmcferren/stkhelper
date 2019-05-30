@@ -17,20 +17,18 @@ __email__ = "cnmcferren@gmail.com"
 
 class Scenario:
 
-    """
+    def __init__(self, application, name, timePeriod):
+        """
 
-    Creates an instance of the scenario.
+        Creates an instance of the scenario.
 
-    Parameters:
-        application (STK11 Instance): Running instance of STK 11.
-        name (str): Name of the scenario to be created.
-        timePeriod (str): The amount of time you want the scenario to run for.
+        Parameters:
+            application (STK11 Instance): Running instance of STK 11.
+            name (str): Name of the scenario to be created.
+            timePeriod (str): The amount of time you want the scenario to run for.
                         Examples: "+24hr", "+365days", "+10days".
 
-    """
-
-    def __init__(self, application, name, timePeriod):
-        
+        """  
         
         self.__guardian = application
         self.name = name.replace(' ','_')
@@ -43,50 +41,47 @@ class Scenario:
         except COMError:
             raise ValueError, "Time period not properly formatted"
 
-    """
+    def SetTimePeriod(self, elapsedTime):    
+        """
 
-    Sets a new time period for the scenario.
+        Sets a new time period for the scenario.
 
-    Parameters:
-        elapsedTime (str): The amound of time you want the scenario to run for.
-                        Examples: "+24hr", "+365days", "+10days".
+        Parameters:
+            elapsedTime (str): The amound of time you want the scenario to run for.
+                            Examples: "+24hr", "+365days", "+10days".
 
-    """
-
-    def SetTimePeriod(self, elapsedTime):
+        """
 
         self.__scenario.SetTimePeriod('Today',str(elapsedTime))
-       
-    """
 
-    Gets the reference variable for the scenario.
+    def GetReference(self):          
+        """
 
-    Returns:
-        self.__scenario (STKObjects.IAgScenario): The currenting running scenario.
+        Gets the reference variable for the scenario.
 
-    """
-
-    def GetReference(self):
+        Returns:
+            self.__scenario (STKObjects.IAgScenario): The currenting running scenario.
+        
+        """
+        
         return self.__scenario
-
-    """
-
-    Closes the scenario.
-
-    """
     
-    def Close(self):
+    def Close(self):     
+        """
+
+        Closes the scenario.
+
+        """
 
         self.__guardian.root.CloseScenario()
 
-    """
+    def GetGuardian(self):   
+        """
 
-    Returns the guardian of the scenario class, which is the application.
+        Returns the guardian of the scenario class, which is the application.
+        
+        Returns:
+            self.__guardian (STK11 Instances): The running application.
 
-    Returns:
-        self.__guardian (STK11 Instances): The running application.
-
-    """
-
-    def GetGuardian(self):
+        """
         return self.__guardian
