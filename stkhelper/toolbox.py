@@ -89,22 +89,60 @@ class Toolbox:
         
         return (midLat,midLon)
     
+    """
+    Compares if time1 is greater than time2. If it is, it returns true. If
+    it is not, it returns false.
+    
+    Parameters:
+        time1 (datetime): Object to test.
+        time2 (datetime): Object to compare to time1.
+        
+    Returns:
+        True if time1 is greater than time2. Otherwise, it returns false.
+        
+    """
+    
     @staticmethod
-    def GetTimeDelta(timeArray):
+    def CompareTime(time1,time2):
+        time1Elems = [time1.year,
+                     time1.month,
+                     time1.day,
+                     time1.hour,
+                     time1.minute,
+                     time1.second,
+                     time1.microsecond]
         
-        """
+        time2Elems = [time2.year,
+                     time2.month,
+                     time2.day,
+                     time2.hour,
+                     time2.minute,
+                     time2.second,
+                     time2.microsecond]
         
-        Computes the time difference between to time instances from STK.
-        
-        Parameters:
-            timeArray (list): A list containting two time instances from STK.
-            Each instance is in format: 'DD MM YYYY HH:mm:SS.sss'
+        for i in range(len(time1Elems)):
+            if time1Elems[i] > time2Elems[i]:
+                return True
+            else:
+                pass
             
-        Returns:
-            deltat (float): Time elapsed in seconds between the two instants.
-            
-        """
+        return False
         
+
+    """
+    
+    Converts time from STK format to datetime objects.
+    
+    Parameters:
+        time1 (str): The time string from STK.
+        
+    Returns:
+        timeObj1 (datetime): The datetime objects.
+        
+    """
+    
+    @staticmethod    
+    def ConvertTime(time1):
         monthDict = {"Jan": 1,
                      "Feb": 2,
                      "Mar": 3,
@@ -118,7 +156,7 @@ class Toolbox:
                      "Nov": 11,
                      "Dec": 12}
         
-        time1 = str(timeArray[0])
+        time1 = str(time1)
         
         splitTime1 = time1.split(' ')
         day1 = splitTime1[0]
@@ -142,29 +180,26 @@ class Toolbox:
                 second=int(seconds1),
                 microsecond=int(microseconds1))
         
-        time2 = str(timeArray[1])
+        return timeObj1
+    
+    @staticmethod
+    def GetTimeDelta(timeArray):
         
-        splitTime2 = time2.split(' ')
-        day2 = splitTime2[0]
-        month2 = monthDict[splitTime2[1]]
-        year2 = splitTime2[2]
+        """
         
-        clockTime2 = splitTime2[3]
+        Computes the time difference between to time instances from STK.
         
-        splitClockTime2 = clockTime2.split(':')
-        hours2 = splitClockTime2[0]
-        minutes2 = splitClockTime2[1]
-        seconds2 = splitClockTime2[2].split('.')[0]
-        microseconds2 = splitClockTime2[2].split('.')[1]
+        Parameters:
+            timeArray (list): A list containting two time instances from STK.
+            Each instance is in format: 'DD MM YYYY HH:mm:SS.sss'
+            
+        Returns:
+            deltat (float): Time elapsed in seconds between the two instants.
+            
+        """
         
-        timeObj2 = datetime.datetime(
-                int(year2),
-                int(month2),
-                int(day2),
-                hour=int(hours2),
-                minute=int(minutes2),
-                second=int(seconds2),
-                microsecond=int(microseconds2))
+        timeObj1 = Toolbox.ConvertTime(str(timeArray[0]))
+        timeObj2 = Toolbox.ConvertTime(str(timeArray[1]))
         
         timeDiff = timeObj2 - timeObj1
         print(timeDiff.days,timeDiff.seconds, timeDiff.microseconds)
