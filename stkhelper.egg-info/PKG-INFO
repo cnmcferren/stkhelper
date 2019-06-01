@@ -1,28 +1,28 @@
 Metadata-Version: 2.1
 Name: stkhelper
-Version: 2.1.3
+Version: 2.1.4
 Summary: Uses the STK software to create simulations for satellite testing
 Home-page: https://github.com/cnmcferren/stkhelper
 Author: W. Conor McFerren
 Author-email: cnmcferren@gmail.com
 License: UNKNOWN
-Description: #STKHelper
+Description: # STKHelper
         
-            STKHelper is a Python package designed for making interfacing with AGI's
+        STKHelper is a Python package designed for making interfacing with AGI's
         STK easier. 
         
-        ##Installation
+        ## Installation
         
-            STKHelper is available on the Python Packaging Index and can be installed 
+        STKHelper is available on the Python Packaging Index and can be installed 
         using pip
         
         ```bash
         pip install stkhelper
         ```
         
-        ##Usage
+        ## Usage
         
-            Interfacing STK with Python can be difficult task due to its confusing 
+        Interfacing STK with Python can be difficult task due to its confusing 
         class system, which involves lots of type casting and several references to the
         same object. To combat this, STKHelper implements a "guardian class
         relationship". Every object (with the exception of the application itself) has
@@ -32,7 +32,6 @@ Description: #STKHelper
         contains.
         
         ```python
-        
         from stkhelper import application, scenario, scenarioObjects
         
         app = application.Application()
@@ -40,16 +39,14 @@ Description: #STKHelper
         sat = scenarioObjects.Satellite(scene,'TestSat',25544)
         ```
         
-            In this code snippet, an application is created. In that application, a
+        In this code snippet, an application is created. In that application, a
         scenario is added and the reference to the app is passed as the guardian in the
         declaration. When the satellite is created, the scenario reference is passed
         at declaration as the guardian. The reference to the guardian can always be
         returned with the following method on all objects:
         
         ```python
-        
         object.GetReference()
-        
         ```
         
 Platform: UNKNOWN
