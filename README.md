@@ -1,9 +1,9 @@
-#STKHelper
+# STKHelper
 
     STKHelper is a Python package designed for making interfacing with AGI's
 STK easier. 
 
-##Installation
+## Installation
 
     STKHelper is available on the Python Packaging Index and can be installed 
 using pip
@@ -12,7 +12,7 @@ using pip
 pip install stkhelper
 ```
 
-##Usage
+## Usage
 
     Interfacing STK with Python can be difficult task due to its confusing 
 class system, which involves lots of type casting and several references to the
