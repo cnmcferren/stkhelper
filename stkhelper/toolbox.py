@@ -46,8 +46,6 @@ class TLE_Manager:
     def GenerateTLE(application, sscNumber):
     
         """
-    
-        TESTING REQUIRED
 
         Retrieves TLE file for a satellite with a given SSC Number
 
@@ -92,6 +90,7 @@ class Toolbox:
     @staticmethod
     def CompareTime(time1,time2):       
         """
+
         Compares if time1 is greater than time2. If it is, it returns true. If
         it is not, it returns false.
         
