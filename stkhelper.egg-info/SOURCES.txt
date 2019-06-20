@@ -3,6 +3,7 @@ setup.cfg
 setup.py
 stkhelper/__init__.py
 stkhelper/application.py
+stkhelper/initializer.py
 stkhelper/scenario.py
 stkhelper/scenarioObjects.py
 stkhelper/toolbox.py

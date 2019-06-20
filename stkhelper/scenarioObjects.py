@@ -144,7 +144,7 @@ class Camera:
     def __init__(self, hostSat, name, fov):    
         """
 
-        The camera that can be added to a satellite object.
+        The camera that can be added to a satellite object (Same thing as sensor).
 
         Parameters:
             hostSat (STKObjects.eSatellite): The satellite that the camera is to be attached to.
@@ -235,6 +235,8 @@ class Camera:
         """
         
         return self.__guardian
+    
+    ##TODO Add name attribute
 
 class Satellite:
 

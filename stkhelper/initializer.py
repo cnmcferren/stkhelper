@@ -1,4 +1,4 @@
-class Initializer:
+class Init:
     """
     
     Used for the first time running stkhelper on a computer.
@@ -8,7 +8,7 @@ class Initializer:
     def __init__(self):
         try:
             from win32api import GetSystemMetrics
-            from comtpyes.client import CreateObject
+            from comtypes.client import CreateObject
         
             print("Creating STK11 Object...")
             uiApplication = CreateObject("STK11.Application")

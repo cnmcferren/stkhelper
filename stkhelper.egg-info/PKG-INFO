@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: stkhelper
-Version: 2.1.4
+Version: 2.2.0
 Summary: Uses the STK software to create simulations for satellite testing
 Home-page: https://github.com/cnmcferren/stkhelper
 Author: W. Conor McFerren
