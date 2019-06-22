@@ -154,6 +154,7 @@ class Camera:
         """
 
         self.__guardian = hostSat
+        self.name = name
         
         if not ((type(fov[0]) == int or type(fov[0]) == float) and
                 (type(fov[1]) == int or type(fov[1]) == float)):
@@ -235,8 +236,6 @@ class Camera:
         """
         
         return self.__guardian
-    
-    ##TODO Add name attribute
 
 class Satellite:
 
@@ -289,8 +288,6 @@ class Satellite:
                             in the format that STK provides.
 
         """
-        
-        ##TODO: Check time is in correct 24hr clock format
         
         satDPSingle = self.__satellite.DataProviders.Item('Classical Elements')
         satDPSingle = satDPSingle.QueryInterface(STKObjects.IAgDataProviderGroup)
