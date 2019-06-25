@@ -158,7 +158,7 @@ class Camera:
         
         if not ((type(fov[0]) == int or type(fov[0]) == float) and
                 (type(fov[1]) == int or type(fov[1]) == float)):
-            raise TypeError, "Field of View parameters of invalid type."
+            raise TypeError("Field of View parameters of invalid type.")
         
         self.root = self.__guardian.GetGuardian().GetGuardian().root
         
@@ -266,7 +266,7 @@ class Satellite:
         try:
             self.__satellite = self.root.CurrentScenario.Children.New(STKObjects.eSatellite, name)
         except COMError:
-            raise (RuntimeError,'\nIncorrect name format or name already taken for satellite.' + 
+            raise RuntimeError('\nIncorrect name format or name already taken for satellite.' + 
                   ' Please do not use spaces or reuse satellite names.')
             
         try:
@@ -276,7 +276,7 @@ class Satellite:
                                      StartTime + '" "' +
                                      StopTime + '"')
         except COMError:
-            raise (RuntimeError, "Failure to add satellite. Check formatting of TLE.")
+            raise RuntimeError("Failure to add satellite. Check formatting of TLE.")
 
     def ComputeKeplerians(self, timeInstant):
         """

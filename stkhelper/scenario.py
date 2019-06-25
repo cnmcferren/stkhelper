@@ -39,7 +39,7 @@ class Scenario:
         try:
             self.__scenario.SetTimePeriod('Today',str(timePeriod))
         except COMError:
-            raise ValueError, "Time period not properly formatted"
+            raise ValueError("Time period not properly formatted")
 
     def SetTimePeriod(self, elapsedTime):    
         """
