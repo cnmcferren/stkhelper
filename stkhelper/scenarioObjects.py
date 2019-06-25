@@ -4,7 +4,7 @@ from comtypes.client import CreateObject
 from comtypes.gen import STKObjects
 from comtypes import COMError
 
-from toolbox import TLE_Manager, Toolbox
+from stkhelper.toolbox import TLE_Manager, Toolbox
 
 __author__ = "W. Conor McFerren"
 __maintainer__ = "W. Conor McFerren"

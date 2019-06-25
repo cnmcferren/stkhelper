@@ -44,7 +44,7 @@ class TLE_Manager:
 
     @staticmethod
     def GenerateTLE(application, sscNumber):
-    
+        
         """
 
         Retrieves TLE file for a satellite with a given SSC Number
@@ -52,14 +52,14 @@ class TLE_Manager:
         Parameters:
             application (uiApplication): Application object that holds the scenario.
             sscNumber (str || int): SSC Number of the satellite to retrieve TLE file from.
-    
+        
         """
         
         sscNumber = str(sscNumber)
-        application.root.ExecuteCommand("CreateTLEFile * AGIServer " +
-                os.getcwd() + "\\" + sscNumber + ".tle" + 
-                " SSCNumber " + sscNumber)
-   
+        command = "CreateTLEFile * AGIServer " + os.getcwd() + "\\" + sscNumber + ".tle SSCNumber " + sscNumber
+        print(command)
+        application.root.ExecuteCommand(command)
+        
 class Toolbox:
 
     @staticmethod
