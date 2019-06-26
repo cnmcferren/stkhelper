@@ -57,7 +57,6 @@ class TLE_Manager:
         
         sscNumber = str(sscNumber)
         command = "CreateTLEFile * AGIServer " + os.getcwd() + "\\" + sscNumber + ".tle SSCNumber " + sscNumber
-        print(command)
         application.root.ExecuteCommand(command)
         
 class Toolbox:
