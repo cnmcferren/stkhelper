@@ -6,6 +6,7 @@ Scenario holds the simulations and all objects within (such as satellites,
 area targets, cameras, etc.).
 
 """
+
 from win32api import GetSystemMetrics
 from comtypes.client import CreateObject
 from comtypes.gen import STKObjects
@@ -17,7 +18,8 @@ __email__ = "cnmcferren@gmail.com"
 
 class Scenario:
 
-    def __init__(self, application, name, timePeriod):
+    def __init__(self, application, name, timePeriod, startTime=None):
+        
         """
 
         Creates an instance of the scenario.
@@ -25,10 +27,17 @@ class Scenario:
         Parameters:
             application (STK11 Instance): Running instance of STK 11.
             name (str): Name of the scenario to be created.
-            timePeriod (str): The amount of time you want the scenario to run for.
+            timePeriod (str): The amount of time you want the scenario to run 
+            for.
+            startTime (str): The start date of the scenario.
                         Examples: "+24hr", "+365days", "+10days".
 
-        """  
+        """
+        
+        if startTime == None:
+            startTime = 'Today'
+        else:
+            startTime = str(startTime)
         
         self.__guardian = application
         self.name = name.replace(' ','_')
@@ -37,22 +46,22 @@ class Scenario:
         self.__scenario = application.root.CurrentScenario
         self.__scenario = self.__scenario.QueryInterface(STKObjects.IAgScenario)
         try:
-            self.__scenario.SetTimePeriod('Today',str(timePeriod))
+            self.__scenario.SetTimePeriod(str(startTime),str(timePeriod))
         except COMError:
             raise ValueError("Time period not properly formatted")
 
-    def SetTimePeriod(self, elapsedTime):    
+    def SetTimePeriod(self, startTime, stopTime):    
         """
 
         Sets a new time period for the scenario.
 
         Parameters:
-            elapsedTime (str): The amound of time you want the scenario to run for.
-                            Examples: "+24hr", "+365days", "+10days".
+            elapsedTime (str): The amound of time you want the scenario to run 
+            for. Examples: "+24hr", "+365days", "+10days".
 
         """
 
-        self.__scenario.SetTimePeriod('Today',str(elapsedTime))
+        self.__scenario.SetTimePeriod(str(startTime),str(stopTime))
 
     def GetReference(self):          
         """
@@ -60,7 +69,8 @@ class Scenario:
         Gets the reference variable for the scenario.
 
         Returns:
-            self.__scenario (STKObjects.IAgScenario): The currenting running scenario.
+            self.__scenario (STKObjects.IAgScenario): The currenting running 
+            scenario.
         
         """
         
