@@ -360,7 +360,7 @@ class Satellite:
                         accessArrays.append(line)
                     
                 except Exception as e:
-                    print("Error on area target %s:\n%s" % (areaTarget.ID,e))
+                    print("Error on area target %s:\n%s\n" % (areaTarget.ID,e))
                     pass
                 
             self.root.EndUpdate()
