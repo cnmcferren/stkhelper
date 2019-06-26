@@ -84,6 +84,19 @@ class Scenario:
         """
 
         self.__guardian.root.CloseScenario()
+        
+    #TODO Test SetTimeStandard for local time ('LST' or 'LCLG')
+    #http://help.agi.com/stk/index.htm#stk/sc-03.htm
+    def SetTimeStandard(self,tStand):
+        """
+        
+        Sets the time format for STK scenario.
+        
+        Parameters (str): Abbreviation for the chosen time format.
+        
+        """
+        
+        self.__guardian.UnitPreferences.Item('DateFormat').SetCurrentUnit(tStand)
 
     def GetGuardian(self):   
         """
