@@ -85,6 +85,15 @@ class Scenario:
 
         self.__guardian.root.CloseScenario()
 
+    def SaveAs(self,path):
+        """
+
+        Saves the scenario at the specified path.
+
+        """
+
+        self.__guardian.root.SaveAs(path)
+
     def GetGuardian(self):   
         """
 
