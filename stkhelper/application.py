@@ -36,6 +36,20 @@ class Application:
         """
         self.root.ExecuteCommand(connectCommand)
 
+    #TODO Test command
+    def UpdateTLEDatabase(self,pathToDatabase):
+        """
+        
+        Online update for STK TLE database.
+        
+        Parameters:
+            pathToDatabase (str): Path to the database file.
+            
+        """
+        
+        command = 'Database * OnlineUpdate Update stkAllTLE "%s"' % pathToDatabase
+        self.root.ExecuteCommand(command)
+        
     def Close(self):     
         """
 
