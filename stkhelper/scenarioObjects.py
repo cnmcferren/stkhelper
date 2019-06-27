@@ -23,7 +23,7 @@ class AreaTarget:
             scenario (STKObjects.IAgScenario): Scenario for the area target
             to be placed in.
             parsedLine (list): Line parsed from the Target List.
-            name (str): Name of the satellite
+            name (str): Name of the area target.
             coordList (list): List of coordinate points in the following form:
             [(lat0,lon0),(lat1,lon1),...(latN,lonN)].
 

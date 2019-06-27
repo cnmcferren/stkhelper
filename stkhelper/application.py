@@ -13,14 +13,14 @@ __maintainer__ = "W. Conor McFerren"
 __email__ = "cnmcferren@gmail.com"
 
 class Application:
-    def __init__(self):       
+    def __init__(self,visible=True):       
         """
 
         Application that holds the STK11 application.
 
         """
         self.__uiApplication = CreateObject("STK11.Application")
-        self.__uiApplication.Visible = True #Make graphics visible
+        self.__uiApplication.Visible = visible #Make graphics visible
         self.__uiApplication.UserControl = True #Enable user control
         
         self.root = self.__uiApplication.Personality2
