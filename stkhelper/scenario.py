@@ -96,7 +96,7 @@ class Scenario:
         
         """
         
-        self.__guardian.UnitPreferences.Item('DateFormat').SetCurrentUnit(tStand)
+        self.__guardian.root.UnitPreferences.Item('DateFormat').SetCurrentUnit(tStand)
 
     def GetGuardian(self):   
         """
