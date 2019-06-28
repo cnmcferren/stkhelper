@@ -14,7 +14,7 @@ import os
 
 class AppTest:
     def __init__(self):
-        print("Beginning test on the stkhelper.application.Application class...")
+        print("\nBeginning test on the stkhelper.application.Application class...")
         
     def Close(self):
         try:

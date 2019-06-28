@@ -16,7 +16,7 @@ import os
 
 class AreaTargetTest:
     def __init__(self):
-        print("Beginning test on the stkhelper.scenarioObjects.AreaTarget class...")
+        print("\nBeginning test on the stkhelper.scenarioObjects.AreaTarget class...")
         self.app = application.Application(visible=False)
         self.scene = scenario.Scenario(self.app,'Test', '+24hr')
         
@@ -24,10 +24,10 @@ class AreaTargetTest:
     
     def CoordList(self):
         try:
-            coords = [(20,20),
-                      (25,20),
-                      (25,25),
-                      (20,25)]
+            coords = ['20,20',
+                      '25,20',
+                      '25,25',
+                      '20,25']
             at = scenarioObjects.AreaTarget(self.scene,name='CoordList',coordList=coords)
             print('[ ok ] scenarioObjects.AreaTarget with coordinate list.')
         except Exception as e:
@@ -36,10 +36,10 @@ class AreaTargetTest:
             
     def SetElevationConstraint(self):
         try:
-            coords = [(25,25),
-                      (30,25),
-                      (30,30),
-                      (25,30)]
+            coords = ['25,25',
+                      '30,25',
+                      '30,30',
+                      '25,30']
             at = scenarioObjects.AreaTarget(self.scene,name='ElevCon',coordList=coords)
             at.SetElevationConstraint(15)
             print('[ ok ] AreaTarget.SetElevationConstraint().')
@@ -51,10 +51,10 @@ class AreaTargetTest:
     
     def GetGuardian(self):
         try:
-            coords = [(25,25),
-                      (30,25),
-                      (30,30),
-                      (25,30)]
+            coords = ['25,25',
+                      '30,25',
+                      '30,30',
+                      '25,30']
             at = scenarioObjects.AreaTarget(self.scene,name='CoordList',coordList=coords)
             guardian = at.GetGuardian()
             if guardian == STKObjects.IAgScenario:
@@ -73,7 +73,7 @@ class AreaTargetTest:
     
 class SatelliteTest:
     def __init__(self):
-        print("Beginning test on the stkhelper.scenarioObjects.Satellite class...")
+        print("\nBeginning test on the stkhelper.scenarioObjects.Satellite class...")
         self.app = application.Application(visible=False)
         self.scene = scenario.Scenario(self.app,'Test','+365days')
     
@@ -90,7 +90,7 @@ class SatelliteTest:
             start = '10 Jan 2019 01:01:01.000 UTCG'
             stop = '11 Jan 2019 01:01:01.000 UTCG'
             sat = scenarioObjects.Satellite(self.scene,
-                                            'Default',
+                                            'Preset',
                                             25544,
                                             StartTime=start,
                                             StopTime=stop)
@@ -124,10 +124,10 @@ class SatelliteTest:
     def GetAccess(self):
         try:
             atList = []
-            coords = [(25,25),
-                      (30,25),
-                      (30,30),
-                      (25,30)]
+            coords = ['25,25',
+                      '30,25',
+                      '30,30',
+                      '25,30']
             at = scenarioObjects.AreaTarget(self.scene,name='Single',coordList=coords)
             
             sat = scenarioObjects.Satellite(self.scene,'Access',25544)
@@ -152,14 +152,14 @@ class SatelliteTest:
         except Exception as e:
             print('[ fail ] Satellite.GetReference() failed with exception: %s' % e)
             
-    def GetGuardian(self)
+    def GetGuardian(self):
         try:
             sat = scenarioObjects.Satellite(self.scene,'Guard',25544)
             ref = sat.GetGuardian()
             if type(ref) == STKObjects.IAgSatellite:
                 print('[ ok ] Satellite.GetGuardian()')
             else:
-                print('[ fail ] Satellite.GetGuardian()) returned incorrect type')
+                print('[ fail ] Satellite.GetGuardian() returned incorrect type')
         except Exception as e:
             print('[ fail ] Satellite.GetGuardian() failed with exception: %s' % e)  
             
@@ -175,16 +175,16 @@ class SatelliteTest:
         
 class CameraTest:
     def __init__(self):
-        print("Beginning test on the stkhelper.scenarioObjects.Camera class...")
+        print("\nBeginning test on the stkhelper.scenarioObjects.Camera class...")
         self.app = application.Application(visible=False)
         self.scene = scenario.Scenario(app,'Test','+365days')
         self.sat = scenarioObjects.Satellite(scene,
                                              'Test',
                                              25544)
-        coords = [(25,25),
-                  (30,25),
-                  (30,30),
-                  (25,30)]
+        coords = ['25,25',
+                  '30,25',
+                  '30,30',
+                  '25,30']
         self.at = scenarioObjects.AreaTarget(scene,name='Test',coordList=coords)
         
     def CreateCam(self):
