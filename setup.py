@@ -4,7 +4,7 @@ info = open('README.md').read()
 
 setup(
       name='stkhelper',
-      version='2.2.1',
+      version='2.2.2',
       description='Uses the STK software to create simulations for satellite testing',
       long_description=info,
       long_description_content_type='text/markdown',
