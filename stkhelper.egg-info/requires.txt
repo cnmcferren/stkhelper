@@ -1,3 +1,0 @@
-comtypes
-pypiwin32
-datetime
