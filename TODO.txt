@@ -1,3 +1,4 @@
 1. Update UML diagram
 2. Add classes and functions to scenarioobjects.py, application.py, satellite.py,
 areatarget.py
+3. Overwrite the print method for objects
