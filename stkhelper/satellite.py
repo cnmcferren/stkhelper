@@ -1,16 +1,37 @@
 from scenarioobject import ScenarioObject
 from toolbox import TLE_Manager
 
+from comtypes import COMError
+from comtypes.gen import STKObjects
+
 class Satellite(ScenarioObject):
     def __init__(self, guardian, name, sscNumber, startTime=None, stopTime=None):
         super().__init__(guardian,name)
         self.sscNumber = sscNumber
         
         TLE_Manager.GenerateTLE(str(sscNumber) + ".tle")
-        self.tle = TLE_Manager.ParseTLE(str(sscNumber + ".tle"))        
+        self.tle = TLE_Manager.ParseTLE(str(sscNumber + ".tle")) 
+        self.root = guardian.guardian.root
         
         if startTime == None:
             startTime = self.guardian.reference.StartTime
         if stopTime == None:
             stopTime = self.guardian.reference.StopTime
             
+        self.reference = self.root.CurrentScenario.Children.New(STKObjects.eSatellite, name)
+            
+        try:
+            self.root.ExecuteCommand('SetState */Satellite/' + self.name + ' TLE "' +
+                                     self.tle[0] + '" "' + self.tle[1] +
+                                     '" TimePeriod "' +
+                                     startTime + '" "' +
+                                     stopTime + '"')
+        except COMError:
+            raise RuntimeError("Failure to add satellite. Check formatting of TLE.")
+            
+    def GetAccess(self,scenarioObject):
+        self.root.BeginUpdate()
+        access = super().GetAccess(scenarioObject)
+        self.root.EndUpdate()
+        
+        return access
