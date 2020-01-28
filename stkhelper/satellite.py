@@ -11,7 +11,7 @@ class Satellite(ScenarioObject):
         self.name = name
     
         self.root = guardian.guardian.root    
-        TLE_Manager.GenerateTLE(self.root, str(sscNumber) + ".tle")
+        TLE_Manager.GenerateTLE(self.root, str(sscNumber))
         self.tle = TLE_Manager.ParseTLE(str(sscNumber + ".tle")) 
         
         if startTime == None:
