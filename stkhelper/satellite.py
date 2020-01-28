@@ -8,6 +8,7 @@ class Satellite(ScenarioObject):
     def __init__(self, guardian, name, sscNumber, startTime=None, stopTime=None):
         super().__init__(guardian,name)
         self.sscNumber = sscNumber
+        self.name = name
     
         self.root = guardian.guardian.root    
         TLE_Manager.GenerateTLE(self.root, str(sscNumber) + ".tle")
@@ -25,8 +26,6 @@ class Satellite(ScenarioObject):
                 '" TimePeriod "' + \
                 startTime + '" "' + \
                 stopTime + '"'
-
-        print(command)
         try:                                 
             self.root.ExecuteCommand(command)
         except COMError:
