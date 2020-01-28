@@ -20,5 +20,5 @@ class Application:
     def Connect(self,connectCommand):
         self.root.ExecuteCommand(connectCommand)
         
-    def Close():
+    def Close(self):
         self.__uiApplication.Close()
