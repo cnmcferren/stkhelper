@@ -21,10 +21,10 @@ class Satellite(ScenarioObject):
         self.reference = self.root.CurrentScenario.Children.New(STKObjects.eSatellite, name)
             
         try:
-            command = 'SetState */Satellite/' + self.name + ' TLE "' +
-                                     self.tle[0] + '" "' + self.tle[1] +
-                                     '" TimePeriod "' +
-                                     startTime + '" "' +
+            command = 'SetState */Satellite/' + self.name + ' TLE "' + \
+                                     self.tle[0] + '" "' + self.tle[1] + \
+                                     '" TimePeriod "' + \
+                                     startTime + '" "' + \
                                      stopTime + '"'
                                      
             print(command)
