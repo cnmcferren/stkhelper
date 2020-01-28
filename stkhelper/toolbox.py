@@ -60,7 +60,7 @@ class TLE_Manager:
 class Toolbox:
 
     @staticmethod
-    def ComputeCenterTarget(coordList):
+    def ComputeCentroid(coordList):
         
         """
         
