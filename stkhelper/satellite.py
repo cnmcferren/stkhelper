@@ -8,10 +8,10 @@ class Satellite(ScenarioObject):
     def __init__(self, guardian, name, sscNumber, startTime=None, stopTime=None):
         super().__init__(guardian,name)
         self.sscNumber = sscNumber
-        
-        TLE_Manager.GenerateTLE(str(sscNumber) + ".tle")
+    
+        self.root = guardian.guardian.root    
+        TLE_Manager.GenerateTLE(self.root, str(sscNumber) + ".tle")
         self.tle = TLE_Manager.ParseTLE(str(sscNumber + ".tle")) 
-        self.root = guardian.guardian.root
         
         if startTime == None:
             startTime = self.guardian.reference.StartTime
