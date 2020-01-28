@@ -1,5 +1,5 @@
-from scenarioobject import ScenarioObject
-from toolbox import TLE_Manager
+from stkhelper.scenarioobject import ScenarioObject
+from stkhelper.toolbox import TLE_Manager
 
 from comtypes import COMError
 from comtypes.gen import STKObjects
