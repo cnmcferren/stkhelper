@@ -19,15 +19,15 @@ class Satellite(ScenarioObject):
             stopTime = self.guardian.reference.StopTime
             
         self.reference = self.root.CurrentScenario.Children.New(STKObjects.eSatellite, name)
-            
-        try:
-            command = 'SetState */Satellite/' + self.name + ' TLE "' + \
-                                     self.tle[0] + '" "' + self.tle[1] + \
-                                     '" TimePeriod "' + \
-                                     startTime + '" "' + \
-                                     stopTime + '"'
-                                     
-            print(command)
+
+        command = 'SetState */Satellite/' + self.name + ' TLE "' + \
+                self.tle[0] + '" "' + self.tle[1] + \
+                '" TimePeriod "' + \
+                startTime + '" "' + \
+                stopTime + '"'
+
+        print(command)
+        try:                                 
             self.root.ExecuteCommand(command)
         except COMError:
             raise RuntimeError("Failure to add satellite. Check formatting of TLE.")
