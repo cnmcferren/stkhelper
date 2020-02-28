@@ -50,3 +50,8 @@ class Satellite(ScenarioObject):
     def SetModel(self,modelFile):
         command = 'VO %s Model File "%s"' % (self.path,modelFile)
         self.root.ExecuteCommand(command)
+        
+    def SetAttitude(self,profile):
+        #TODO account for offset
+        command = 'SetAttitude %s Profile %s Offset 0 0 0'
+        self.root.ExecuteCommand(command)
