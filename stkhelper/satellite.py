@@ -39,7 +39,9 @@ class Satellite(ScenarioObject):
         
         return access
     
-    def GetPower(self,startTime,endTime,timestep,outputPath):
+    def GetPower(self,startTime,endTime,timestep,radius,outputPath):
+        command = 'VO %s SolarPanel Visualization Radius On %f' % (self.path,radius)
+        self.root.ExecuteCommand(command)
         command = 'VO %s SolarPanel Compute "%s" "%s" %i Power "%s"' % \
                     (self.path,startTime,endTime,timestep,outputPath)
                     
