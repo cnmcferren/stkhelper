@@ -53,5 +53,5 @@ class Satellite(ScenarioObject):
         
     def SetAttitude(self,profile):
         #TODO account for offset
-        command = 'SetAttitude %s Profile %s Offset 0 0 0'
+        command = 'SetAttitude %s Profile %s Offset 0 0 0' % (self.path,profile)
         self.root.ExecuteCommand(command)
