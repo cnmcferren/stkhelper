@@ -9,6 +9,7 @@ class Satellite(ScenarioObject):
         super().__init__(guardian,name)
         self.sscNumber = sscNumber
         self.name = name
+        self.path = "*/Satellite/" + name
     
         self.root = guardian.guardian.root    
         TLE_Manager.GenerateTLE(self.root, str(sscNumber))
@@ -37,3 +38,9 @@ class Satellite(ScenarioObject):
         self.root.EndUpdate()
         
         return access
+    
+    def GetPower(self,startTime,endTime,timestep,outputPath):
+        command = 'VO %s SolarPanel Compute "%s" "%s" %i Power "%s"' % \
+                    (self.path,startTime,endTime,timestep,outputPath)
+                    
+        self.root.ExecuteCommand(command)
