@@ -46,3 +46,7 @@ class Satellite(ScenarioObject):
                     (self.path,startTime,endTime,timestep,outputPath)
                     
         self.root.ExecuteCommand(command)
+        
+    def SetModel(self,modelFile):
+        command = 'VO %s Model File "%s"' % (self.path,modelFile)
+        self.root.ExecuteCommand(command)
