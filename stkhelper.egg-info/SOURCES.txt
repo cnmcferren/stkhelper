@@ -8,6 +8,7 @@ stkhelper/satellite.py
 stkhelper/scenario.py
 stkhelper/scenarioobject.py
 stkhelper/sensor.py
+stkhelper/tests.py
 stkhelper/toolbox.py
 stkhelper.egg-info/PKG-INFO
 stkhelper.egg-info/SOURCES.txt
