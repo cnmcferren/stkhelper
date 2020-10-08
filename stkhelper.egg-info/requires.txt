@@ -1,3 +1,5 @@
 comtypes
 pypiwin32
 datetime
+wheel
+pandas
