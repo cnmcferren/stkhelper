@@ -1,2 +1,3 @@
 .DS_Store
-.stkhelper.egg-info/*
+stkhelper.egg-info/*
+stkhelper/__pycache__/*
