@@ -74,6 +74,8 @@ class AreaTarget(ScenarioObject):
     
     """
     def SetElevationConstraint(self, angle):
-        self.root.ExecuteCommand("SetConstraint " + \
-                                 "*/AreaTarget/" + str(self.name) + \
-                                 " ElevationAngle " + str(float(angle)))
+        strCommand = "SetConstraint " + \
+                    "*/AreaTarget/" + str(self.name) + \
+                    " ElevationAngle " + str(float(angle))
+        print(strCommand)
+        self.root.ExecuteCommand(strCommand)
