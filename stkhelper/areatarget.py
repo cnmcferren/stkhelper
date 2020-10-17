@@ -65,17 +65,3 @@ class AreaTarget(ScenarioObject):
         
         return access
     
-    """
-    
-    Sets an elevation access constraint for the area target.
-    
-    Parameters:
-        angle(float): The angle to restrict the access.
-    
-    """
-    def SetElevationConstraint(self, angle):
-        strCommand = "SetConstraint " + \
-                    "*/AreaTarget/" + str(self.name) + \
-                    " ElevationAngle " + str(float(angle))
-        print("Connect Command: " + strCommand)
-        self.root.ExecuteCommand(strCommand)
