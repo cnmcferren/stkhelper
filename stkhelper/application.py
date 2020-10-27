@@ -21,10 +21,15 @@ class Application:
     
     Parameters:
         connectCommand(str): The Connect Command string to be executed
+
+    Return:
+        Result of the Connect Command.
     
     """
     def Connect(self,connectCommand):
-        self.root.ExecuteCommand(connectCommand)
+        result = self.root.ExecuteCommand(connectCommand)
+
+        return result
         
     """
     
