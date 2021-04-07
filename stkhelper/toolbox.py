@@ -185,7 +185,7 @@ class Toolbox:
         timeObj2 = Toolbox.ConvertTime(str(timeArray[1]))
         
         timeDiff = timeObj2 - timeObj1
-        print(timeDiff.days,timeDiff.seconds, timeDiff.microseconds)
+        
         deltat = float(timeDiff.days*86400.0) + \
         float(timeDiff.seconds) + \
         (0.001*float(timeDiff.microseconds))

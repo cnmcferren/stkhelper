@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: stkhelper
-Version: 3.0.2
+Version: 3.0.4
 Summary: Uses the STK software to create simulations for satellite testing
 Home-page: https://github.com/cnmcferren/stkhelper
 Author: W. Conor McFerren
@@ -32,11 +32,15 @@ Description: # STKHelper
         contains.
         
         ```python
-        from stkhelper import application, scenario, scenarioObjects
+        from stkhelper import application, scenario, satellite, areatarget
         
         app = application.Application()
         scene = scenario.Scenario(app,'TestScenario','+24hr')
-        sat = scenarioObjects.Satellite(scene,'TestSat',25544)
+        sat = satellite.Satellite(scene,'TestSat',25544)
+        at = areatarget.AreaTarget(scene, name="TestAT", coordList=[(5.0,-7.0)], radius=1.0)
+        cam = sensor.Sensor(sat, 'TestSensor', (15,35))
+        
+        access = cam.GetAccess(at)
         ```
         
         In this code snippet, an application is created. In that application, a
@@ -46,7 +50,7 @@ Description: # STKHelper
         returned with the following method on all objects:
         
         ```python
-        object.GetReference()
+        object.reference
         ```
         
 Platform: UNKNOWN
