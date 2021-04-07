@@ -1,13 +1,14 @@
 from win32api import GetSystemMetrics
 from comtypes.client import CreateObject
 from comtypes.gen import STKObjects
+from toolbox import TLE_Manager
 
 class ScenarioObject:
     def __init__(self, guardian, name):
         self.guardian = guardian
         self.name = name
         
-    def GetAccess(self,scenarioObject):
+    def getAccess(self,scenarioObject):
         access = self.reference.GetAccessToObject(scenarioObject.reference)
         access.ComputeAccess()
         intervalCollection = access.ComputedAccessIntervalTimes
@@ -22,43 +23,6 @@ class ScenarioObject:
             self.root.EndUpdate()
 
             return 0
-
-class Application:
-    
-    """
-    
-    Creates the application for STK
-    
-    """
-    def __init__(self):
-        self.__uiApplication = CreateObject("STK11.Application")
-        self.__uiApplication.Visible = True #Make graphics visible
-        self.__uiApplication.UserControl = True #Enable user control
-        self.root = self.__uiApplication.Personality2
-        
-    """
-    
-    Used to run STK Connect Commands using the root
-    
-    Parameters:
-        connectCommand(str): The Connect Command string to be executed
-
-    Return:
-        Result of the Connect Command.
-    
-    """
-    def Connect(self,connectCommand):
-        result = self.root.ExecuteCommand(connectCommand)
-
-        return result
-        
-    """
-    
-    Closes the application
-    
-    """
-    def Close(self):
-        self.__uiApplication.Close()
 
 class AreaTarget(ScenarioObject):
     """
@@ -114,7 +78,7 @@ class AreaTarget(ScenarioObject):
         access(list): The list of access times
     
     """
-    def GetAccess(self,scenarioObject):
+    def getAccess(self,scenarioObject):
         #TODO Caused error from inherited method. Fix this in scenarioobjects
         self.root.BeginUpdate()
         access = super().GetAccess(scenarioObject)
@@ -176,7 +140,7 @@ class Satellite(ScenarioObject):
         access: List of all access over the scenario time period.
         
     """
-    def GetAccess(self,scenarioObject):
+    def getAccess(self,scenarioObject):
         self.root.BeginUpdate()
         access = super().GetAccess(scenarioObject)
         self.root.EndUpdate()
@@ -196,7 +160,7 @@ class Satellite(ScenarioObject):
         outputPath(str): Absolute path of the file to be saved.
     
     """
-    def GetPower(self,startTime,endTime,timestep,radius,outputPath):
+    def getPower(self,startTime,endTime,timestep,radius,outputPath):
         command = 'VO %s SolarPanel Visualization Radius On %f' % (self.path,radius)
         self.root.ExecuteCommand(command)
         command = 'VO %s SolarPanel Compute "%s" "%s" %i Power "%s"' % \
@@ -213,7 +177,7 @@ class Satellite(ScenarioObject):
         modelFile(str): Absolute path to the model file to be used.
     
     """
-    def SetModel(self,modelFile):
+    def setModel(self,modelFile):
         command = 'VO %s Model File "%s"' % (self.path,modelFile)
         self.root.ExecuteCommand(command)
         
@@ -227,7 +191,7 @@ class Satellite(ScenarioObject):
     
     
     """
-    def SetAttitude(self,profile):
+    def setAttitude(self,profile):
         #TODO account for offset
         command = 'SetAttitude %s Profile %s Offset 0 0 0' % (self.path,profile)
         self.root.ExecuteCommand(command)

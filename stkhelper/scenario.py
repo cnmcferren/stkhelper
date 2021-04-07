@@ -34,7 +34,7 @@ class Scenario:
         except COMError:
             raise ValueError("Time period not properly formatted")
             
-    def SetTimePeriod(self, startTime, stopTime):    
+    def setTimePeriod(self, startTime, stopTime):    
         """
         Sets a new time period for the scenario.
         Parameters:
@@ -46,7 +46,7 @@ class Scenario:
         self.stopTime = stopTime
         self.reference.SetTimePeriod(str(startTime),str(stopTime))
         
-    def Close(self):     
+    def close(self):     
         """
         Closes the scenario.
         """
