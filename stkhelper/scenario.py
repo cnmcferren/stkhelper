@@ -1,5 +1,6 @@
 from comtypes.gen import STKObjects
 from comtypes import COMError
+import stkhelper.scenarioobject
 
 class Scenario:
     def __init__(self, application, name, timePeriod, startTime=None):
@@ -52,3 +53,7 @@ class Scenario:
         """
 
         self.guardian.root.CloseScenario()
+
+    def addSatellite(self, name, sscNumber, startTime=None, endTime=None):
+        return stkhelper.scenarioobject.Satellite(self, name, sscNumber, startTime, endTime)
+        

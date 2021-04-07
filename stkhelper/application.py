@@ -1,5 +1,6 @@
 from win32api import GetSystemMetrics
 from comtypes.client import CreateObject
+import stkhelper.scenario
 
 
 class Application:
@@ -37,3 +38,6 @@ class Application:
     """
     def close(self):
         self.__uiApplication.Close()
+
+    def addScenario(self, name, endTime, startTime=None):
+        return stkhelper.scenario.Scenario(self, name, endTime, startTime)
