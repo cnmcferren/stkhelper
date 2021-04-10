@@ -1,7 +1,7 @@
 from win32api import GetSystemMetrics
 from comtypes.client import CreateObject
 from comtypes.gen import STKObjects
-from toolbox import TLE_Manager
+from stkhelper.toolbox import TLE_Manager
 
 class ScenarioObject:
     def __init__(self, guardian, name):

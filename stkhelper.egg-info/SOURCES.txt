@@ -3,8 +3,6 @@ setup.cfg
 setup.py
 stkhelper/__init__.py
 stkhelper/application.py
-stkhelper/areatarget.py
-stkhelper/satellite.py
 stkhelper/scenario.py
 stkhelper/scenarioobject.py
 stkhelper/sensor.py

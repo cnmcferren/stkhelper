@@ -37,7 +37,7 @@ class Application:
     
     """
     def close(self):
-        self.__uiApplication.Close()
+        self.__uiApplication.Quit()
 
     def addScenario(self, name, endTime, startTime=None):
         return stkhelper.scenario.Scenario(self, name, endTime, startTime)

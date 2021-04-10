@@ -24,23 +24,9 @@ the scenario. Similarly, a satellite is the guardian for all cameras that it
 contains.
 
 ```python
-from stkhelper import application, scenario, satellite, areatarget
+from stkhelper.application import Application
 
-app = application.Application()
-scene = scenario.Scenario(app,'TestScenario','+24hr')
-sat = satellite.Satellite(scene,'TestSat',25544)
-at = areatarget.AreaTarget(scene, name="TestAT", coordList=[(5.0,-7.0)], radius=1.0)
-cam = sensor.Sensor(sat, 'TestSensor', (15,35))
-
-access = cam.GetAccess(at)
-```
-
-In this code snippet, an application is created. In that application, a
-scenario is added and the reference to the app is passed as the guardian in the
-declaration. When the satellite is created, the scenario reference is passed
-at declaration as the guardian. The reference to the guardian can always be
-returned with the following method on all objects:
-
-```python
-object.reference
+app = Application
+scene = app.addScenario('TestScenario', '+24hr')
+sat = scene.addSatellite('ISS', 25544)
 ```

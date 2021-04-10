@@ -57,3 +57,5 @@ class Scenario:
     def addSatellite(self, name, sscNumber, startTime=None, endTime=None):
         return stkhelper.scenarioobject.Satellite(self, name, sscNumber, startTime, endTime)
         
+    def addAreaTarget(self, guardian, name=None, coordList=None, radius=None):
+        return stkhelper.scenarioobject.AreaTarget(self, guardian, name, coordList, radius)
